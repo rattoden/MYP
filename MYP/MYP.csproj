@@ -88,9 +88,6 @@
     <Compile Include="Contact_Page.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Employee\Documents_E.xaml.cs">
-      <DependentUpon>Documents_E.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Employee\Employee.xaml.cs">
       <DependentUpon>Employee.xaml</DependentUpon>
     </Compile>
@@ -181,10 +178,6 @@
       <DependentUpon>Authorization.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Employee\Documents_E.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Employee\Employee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
