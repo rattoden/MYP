@@ -64,7 +64,7 @@ namespace MYP.Employee
                     privat.FontFamily = new FontFamily("IBM Plex Mono Light"); privat.FontSize = 18;
                     //documents.FontFamily = new FontFamily("IBM Plex Mono Medium"); documents.FontSize = 22;
                     logout.FontFamily = new FontFamily("IBM Plex Mono Light"); logout.FontSize = 18;
-                    MainFrame.Navigate(new Documents_E());
+                    //MainFrame.Navigate(new Documents_E());
                     break;
                 case 4:
                     inspection.FontFamily = new FontFamily("IBM Plex Mono Light"); inspection.FontSize = 18;
