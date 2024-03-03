@@ -1,0 +1,28 @@
+﻿<Window x:Class="MYP.Authorization"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        WindowStartupLocation="CenterScreen"
+        xmlns:local="clr-namespace:MYP"
+        mc:Ignorable="d"
+        Title="Авторизация" Icon="resources/key.png" Height="700" MinHeight="700" Width="1200" MinWidth="1200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.4*"/>
+            <RowDefinition Height="8.6*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <TextBlock Text="Дом на Бирюзовой" x:Name="txt" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="40 0" FontFamily="IBM Plex Mono Regular"/>
+            <Border BorderBrush="Black" BorderThickness="0.4" VerticalAlignment="Bottom"/>
+        </Grid>
+        <Grid  Grid.Row="1">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 -50 0 0">
+                <TextBlock Text="Авторизация" x:Name="auth" FontWeight="Medium" FontSize="32" HorizontalAlignment="Center" Margin="0 0 0 30" FontFamily="IBM Plex Mono Medium"/>
+                <TextBox Style="{StaticResource RoundedTextBox2}" Text="Логин" x:Name="login" GotFocus="TextBox1_GotFocus" LostFocus="TextBox1_LostFocus" FontFamily="Cabin"/>
+                <TextBox Style="{StaticResource RoundedTextBox2}" Text="Пароль" x:Name="password" GotFocus="TextBox2_GotFocus" LostFocus="TextBox2_LostFocus" Margin="0 20 0 30" FontFamily="Cabin"/>
+                <Button Style="{StaticResource RoundedButton}" Content="Войти" Width="150" Click="Button_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,46 @@
+﻿<Page x:Class="MYP.Admin.Contacts_A"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MYP.Admin"
+      mc:Ignorable="d"
+      Title="Contacts_A" d:DesignHeight="600" d:DesignWidth="950">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Orientation="Vertical" Margin="80 30 80 30" Width="auto">
+                <TextBlock Text="Контакты" FontWeight="Medium" FontSize="28" HorizontalAlignment="Center" FontFamily="IBM Plex Mono Medium"/>
+                <TextBlock Style="{StaticResource textblock}" Text="Адрес"/>
+                <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="address"/>
+                <TextBlock Style="{StaticResource textblock}" Text="E-mail"/>
+                <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="email"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock Style="{StaticResource textblock}" Text="Телефон приёмной" Margin="0 30 0 15" HorizontalAlignment="Center"/>
+                            <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="tel_priem" Width="200" PreviewTextInput="Number_PreviewTextInput"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="1" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                            <TextBlock Style="{StaticResource textblock}" Text="Телефон отдела продаж" Margin="0 30 0 15" HorizontalAlignment="Center"/>
+                            <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="tel_prod" Width="200" PreviewTextInput="Number_PreviewTextInput"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="2" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
+                            <TextBlock Style="{StaticResource textblock}" Text="Телефон отдела приватизации" Margin="0 30 0 15" HorizontalAlignment="Center"/>
+                            <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="tel_priv" Width="200" PreviewTextInput="Number_PreviewTextInput"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Button Style="{StaticResource RoundedButton}" Content="Сохранить" Width="180" Margin="0 30 0 0" Click="Button_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

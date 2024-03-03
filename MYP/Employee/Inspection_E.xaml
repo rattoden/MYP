@@ -1,0 +1,251 @@
+﻿<Page x:Class="MYP.Employee.Inspection_E"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MYP.Employee"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="950"
+      Title="Inspection_E">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Orientation="Vertical" Margin="80 30 80 30">
+                <TextBlock Text="Заявки на осмотр квартиры" FontWeight="Medium" FontSize="28" HorizontalAlignment="Center" FontFamily="IBM Plex Mono Medium"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Style="{StaticResource RoundedButton}" Content="Добавить" Width="180" Margin="0 30 0 0" Click="Add_Click"/>
+                    <Button Style="{StaticResource RoundedButton}" Content="Квартиры" Width="180" Margin="20 30 0 0" Click="Flats_Click"/>
+                </StackPanel>
+                <DataGrid AutoGenerateColumns="False" FontFamily="Cabin" FontSize="18" x:Name="inspection" IsReadOnly="True" Margin="0 40 0 0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№" Binding="{Binding id}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Имя" Width="50*" Binding="{Binding name}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Телефон" Binding="{Binding telephone}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Header="№ кв">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource button_menu}" Click="Flat_Click">
+                                        <TextBlock Text="{Binding id_flat}" TextDecorations="Underline"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Дата" Binding="{Binding date, StringFormat={}{0:dd.MM.yyyy hh:mm}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Статус" Binding="{Binding Status.name}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Status_button_Click" Style="{StaticResource status_button}">
+                                        <TextBlock Text="{Binding status_button}" x:Name="status_button" TextWrapping="Wrap"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource CRUDbutton}" Click="Edit_Click">
+                                        <Image Source="../resources/edit.png" Style="{StaticResource image}"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource CRUDbutton}" Click="Delete_Click">
+                                        <Image Source="../resources/del.png" Style="{StaticResource image}"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </ScrollViewer>
+        <Popup Name="flat_popup" StaysOpen="False" Placement="Center" IsOpen="False">
+            <Border Background="#FFFF" CornerRadius="5" Padding="15" BorderBrush="#787272" BorderThickness="2">
+                <StackPanel Orientation="Vertical">
+                    <Image Width="300" Height="300" x:Name="plan"/>
+                    <Border BorderBrush="#D9D9D9" BorderThickness="1" VerticalAlignment="Bottom" Margin="-15 15 -15 0"/>
+                    <TextBlock Style="{StaticResource textblock_price}" FontSize="22" x:Name="price"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource textblock_flat}" x:Name="rooms"/>
+                        <TextBlock Text="·" Style="{StaticResource point_flat}"/>
+                        <TextBlock Style="{StaticResource textblock_flat}" x:Name="area"/>
+                        <TextBlock Text="·" Style="{StaticResource point_flat}"/>
+                        <TextBlock Style="{StaticResource textblock_flat}" x:Name="floor"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Popup>
+        <Popup Name="flats_popup" StaysOpen="False" Placement="Center" IsOpen="False">
+            <Border Background="#FFFF" CornerRadius="5" Padding="15" BorderBrush="#787272" BorderThickness="2">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Квартиры" FontWeight="Medium" FontSize="28" HorizontalAlignment="Center" FontFamily="IBM Plex Mono Medium"/>
+                    <DataGrid AutoGenerateColumns="False" FontFamily="Cabin" FontSize="18" x:Name="flats" Margin="0 30 0 0" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="№" Binding="{Binding id}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="План квартиры">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="Photo_Click" Style="{StaticResource photo_button}">
+                                            <TextBlock Text="{Binding photo}" TextDecorations="Underline"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Цена, руб." Binding="{Binding price}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Комнат" Binding="{Binding rooms}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="м²" Binding="{Binding area}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Этаж" Binding="{Binding floor}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </Popup>
+        <Popup Name="add_popup" StaysOpen="False" Placement="Center" IsOpen="False">
+            <Border Background="#FFFF" CornerRadius="5" Padding="15" BorderBrush="#787272" BorderThickness="2">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Добавление заявки на осмотр квартиры" FontWeight="Medium" FontSize="28" HorizontalAlignment="Center" FontFamily="IBM Plex Mono Medium"/>
+                    <TextBlock Style="{StaticResource textblock}" Text="Имя"/>
+                    <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="name"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 20 0">
+                                <TextBlock Style="{StaticResource textblock}" Text="Телефон"/>
+                                <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="tel" Width="215" PreviewTextInput="Number_PreviewTextInput"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                <TextBlock Style="{StaticResource textblock}" Text="№ квартиры"/>
+                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="num_flat" Width="215" Height="50" FontSize="18" FontFamily="Cabin" Padding="15 0" SelectedIndex="0" DisplayMemberPath="id" SelectedValuePath="id"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="2" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="20 0 0 0">
+                                <TextBlock Style="{StaticResource textblock}" Text="Статус"/>
+                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="status" Width="215" Height="50" FontSize="18" FontFamily="Cabin" Padding="15 0" SelectedIndex="0" DisplayMemberPath="name" SelectedValuePath="name"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Button Style="{StaticResource RoundedButton}" Content="Сохранить" Width="180" Margin="0 50 0 0" Click="Add_Oder_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+        <Popup Name="edit_popup" StaysOpen="False" Placement="Center" IsOpen="False">
+            <Border Background="#FFFF" CornerRadius="5" Padding="15" BorderBrush="#787272" BorderThickness="2">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Редактирование заявки на осмотр квартиры № " FontWeight="Medium" FontSize="28" FontFamily="IBM Plex Mono Medium"/>
+                        <TextBlock x:Name="id1" FontWeight="Medium" FontSize="28" FontFamily="IBM Plex Mono Medium"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource textblock}" Text="Имя"/>
+                    <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="name1"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 20 0">
+                                <TextBlock Style="{StaticResource textblock}" Text="Телефон"/>
+                                <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="tel1" Width="215" PreviewTextInput="Number_PreviewTextInput"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                <TextBlock Style="{StaticResource textblock}" Text="№ квартиры"/>
+                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="num_flat1" Width="215" Height="50" FontSize="18" FontFamily="Cabin" Padding="15 0" SelectedIndex="0" DisplayMemberPath="id" SelectedValuePath="id"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="2" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="20 0 0 0">
+                                <TextBlock Style="{StaticResource textblock}" Text="Статус"/>
+                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="status1" Width="215" Height="50" FontSize="18" FontFamily="Cabin" Padding="15 0" SelectedIndex="0" DisplayMemberPath="name" SelectedValuePath="name"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Button Style="{StaticResource RoundedButton}" Content="Сохранить" Width="180" Margin="0 50 0 0" Click="Edit_Order_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</Page>

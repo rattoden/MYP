@@ -1,0 +1,259 @@
+﻿<Page x:Class="MYP.Admin.Flats_A"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:MYP.Admin"
+        mc:Ignorable="d"
+        Title="Flats_A" d:DesignHeight="600" d:DesignWidth="950"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Orientation="Vertical" Margin="80 30 80 30">
+                <TextBlock Text="Квартиры" FontWeight="Medium" FontSize="28" HorizontalAlignment="Center" FontFamily="IBM Plex Mono Medium"/>
+                <Button Style="{StaticResource RoundedButton}" HorizontalAlignment="Left" Height="45" Content="Добавить" Width="180" FontSize="22" BorderBrush="Black" Margin="0 30 0 0" FontFamily="Cabin" Click="Add_Click"/>
+                <DataGrid AutoGenerateColumns="False" FontFamily="Cabin" FontSize="18" x:Name="flats" Margin="0 30 0 0" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№" Binding="{Binding id}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Header="План квартиры" Width="30*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Photo_Click" Style="{StaticResource photo_button}">
+                                        <TextBlock Text="{Binding photo}" TextDecorations="Underline"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Цена, руб." Binding="{Binding price}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Комнат" Binding="{Binding rooms}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="м²" Binding="{Binding area}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Этаж" Binding="{Binding floor}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Куплена" Binding="{Binding answer}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource CRUDbutton}" Click="Edit_Click">
+                                        <Image Source="../resources/edit.png" Style="{StaticResource image}"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource CRUDbutton}" Click="Delete_Click">
+                                        <Image Source="../resources/del.png" Style="{StaticResource image}"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </ScrollViewer>
+        <Popup Name="add_popup" StaysOpen="False" Placement="Center" IsOpen="False">
+            <Border Background="#FFFF" CornerRadius="5" Padding="15" BorderBrush="#787272" BorderThickness="2">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Добавление квартиры" FontWeight="Medium" FontSize="28" HorizontalAlignment="Center" FontFamily="IBM Plex Mono Medium"/>
+                    <TextBlock Style="{StaticResource textblock}" Text="План квартиры"/>
+                    <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="plan"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 0 20 0">
+                                <TextBlock Style="{StaticResource textblock}" Text="Цена, руб."/>
+                                <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="price" Width="130" PreviewTextInput="Number_PreviewTextInput"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                <TextBlock Style="{StaticResource textblock}" Text="Комнат"/>
+                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="rooms" Width="130" Height="50" FontSize="18" FontFamily="Cabin" Padding="15 0" SelectedIndex="0">
+                                    <ComboBoxItem Content="1"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="3"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="2" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="20 0">
+                                <TextBlock Style="{StaticResource textblock}" Text="м²"/>
+                                <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="area" Width="130" PreviewTextInput="Double_PreviewTextInput"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="3" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
+                                <TextBlock Style="{StaticResource textblock}" Text="Этаж"/>
+                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="floor" Width="130" Height="50" FontSize="18" FontFamily="Cabin" Padding="15 0" SelectedIndex="0">
+                                    <ComboBoxItem Content="1"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="3"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5"/>
+                                    <ComboBoxItem Content="6"/>
+                                    <ComboBoxItem Content="7"/>
+                                    <ComboBoxItem Content="8"/>
+                                    <ComboBoxItem Content="9"/>
+                                    <ComboBoxItem Content="10"/>
+                                    <ComboBoxItem Content="11"/>
+                                    <ComboBoxItem Content="12"/>
+                                    <ComboBoxItem Content="13"/>
+                                    <ComboBoxItem Content="14"/>
+                                    <ComboBoxItem Content="15"/>
+                                    <ComboBoxItem Content="16"/>
+                                    <ComboBoxItem Content="17"/>
+                                    <ComboBoxItem Content="18"/>
+                                    <ComboBoxItem Content="19"/>
+                                    <ComboBoxItem Content="20"/>
+                                    <ComboBoxItem Content="21"/>
+                                    <ComboBoxItem Content="22"/>
+                                    <ComboBoxItem Content="23"/>
+                                    <ComboBoxItem Content="24"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Button Style="{StaticResource RoundedButton}" Content="Сохранить" Width="180" Margin="0 50 0 0" Click="Add_Flat_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+        <Popup Name="edit_popup" StaysOpen="False" Placement="Center" IsOpen="False">
+            <Border Background="#FFFF" CornerRadius="5" Padding="15" BorderBrush="#787272" BorderThickness="2">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Редактирование квартиры № " FontWeight="Medium" FontSize="28" FontFamily="IBM Plex Mono Medium"/>
+                        <TextBlock x:Name="id1" FontWeight="Medium" FontSize="28" FontFamily="IBM Plex Mono Medium"/>
+                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource textblock}" Text="План квартиры" Grid.Column="0"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+                            <TextBlock Style="{StaticResource textblock}" Text="Куплена:"/>
+                            <Button Style="{StaticResource mini_button}" Click="Change_image_Click">
+                                <Image Source="../resources/x.png" x:Name="img_purchased"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="plan1"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="20 0">
+                                <TextBlock Style="{StaticResource textblock}" Text="Цена, руб."/>
+                                <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="price1" Width="130" PreviewTextInput="Number_PreviewTextInput"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="1" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                <TextBlock Style="{StaticResource textblock}" Text="Комнат"/>
+                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="rooms1" Width="130" Height="50" FontSize="18" FontFamily="Cabin" Padding="15 0">
+                                    <ComboBoxItem Content="1"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="3"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="2" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="20 0">
+                                <TextBlock Style="{StaticResource textblock}" Text="м²"/>
+                                <TextBox Style="{StaticResource RoundedTextBox_FixedHeight}" x:Name="area1" Width="130" PreviewTextInput="Double_PreviewTextInput"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="3" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="0 0 20 0">
+                                <TextBlock Style="{StaticResource textblock}" Text="Этаж"/>
+                                <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="floor1" Width="130" Height="50" FontSize="18" FontFamily="Cabin" Padding="15 0">
+                                    <ComboBoxItem Content="1"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="3"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5"/>
+                                    <ComboBoxItem Content="6"/>
+                                    <ComboBoxItem Content="7"/>
+                                    <ComboBoxItem Content="8"/>
+                                    <ComboBoxItem Content="9"/>
+                                    <ComboBoxItem Content="10"/>
+                                    <ComboBoxItem Content="11"/>
+                                    <ComboBoxItem Content="12"/>
+                                    <ComboBoxItem Content="13"/>
+                                    <ComboBoxItem Content="14"/>
+                                    <ComboBoxItem Content="15"/>
+                                    <ComboBoxItem Content="16"/>
+                                    <ComboBoxItem Content="17"/>
+                                    <ComboBoxItem Content="18"/>
+                                    <ComboBoxItem Content="19"/>
+                                    <ComboBoxItem Content="20"/>
+                                    <ComboBoxItem Content="21"/>
+                                    <ComboBoxItem Content="22"/>
+                                    <ComboBoxItem Content="23"/>
+                                    <ComboBoxItem Content="24"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Button Style="{StaticResource RoundedButton}" Content="Сохранить" Width="180" Margin="0 50 0 0" Click="Edit_Flat_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</Page>

@@ -1,0 +1,86 @@
+﻿<Page x:Class="MYP.Admin.Main_A"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MYP.Admin"
+        mc:Ignorable="d"
+        Title="Main_A" d:DesignHeight="600" d:DesignWidth="950">
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Orientation="Vertical" Margin="80 30 80 30">
+                <TextBlock Text="Главная" FontWeight="Medium" FontSize="28" HorizontalAlignment="Center" FontFamily="IBM Plex Mono Medium"/>
+                <TextBlock Style="{StaticResource textblock}" Text="Главное фото"/>
+                <TextBox Style="{StaticResource RoundedTextBox1}" x:Name="main_photo"/>
+                <TextBlock Style="{StaticResource textblock}" Text="Текст"/>
+                <TextBox Style="{StaticResource RoundedTextBox1}" TextWrapping="Wrap" x:Name="text"/>
+                <Button Style="{StaticResource RoundedButton}" HorizontalAlignment="Center" Content="Сохранить" Width="180" Margin="0 30 0 0" Click="Save_Click"/>
+                <Border BorderBrush="Black" BorderThickness="0.4" VerticalAlignment="Bottom" Margin="0 50 0 30"/>
+                <TextBlock Text="Фотографии" FontWeight="Medium" FontSize="28" HorizontalAlignment="Center" FontFamily="IBM Plex Mono Medium"/>
+                <Button Style="{StaticResource RoundedButton}" HorizontalAlignment="Left" Content="Добавить" Width="180" Margin="0 30 0 0" Click="Add_Click"/>
+                <DataGrid AutoGenerateColumns="False" FontFamily="Cabin" FontSize="18" x:Name="photos" IsReadOnly="True" Margin="0 40 0 0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№" Binding="{Binding id}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn Header="Фото" Width="30*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Photo_Click" Style="{StaticResource photo_button}">
+                                        <TextBlock Text="{Binding photo}" TextDecorations="Underline"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource CRUDbutton}" Click="Edit_Click">
+                                        <Image Source="../resources/edit.png" Style="{StaticResource image}"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource CRUDbutton}" Click="Delete_Click">
+                                        <Image Source="../resources/del.png" Style="{StaticResource image}"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </ScrollViewer>
+        <Popup Name="add_popup" StaysOpen="False" Placement="Center" IsOpen="False">
+            <Border Background="#FFFF" CornerRadius="5" Padding="15" BorderBrush="#787272" BorderThickness="2">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Добавление фотографии" FontWeight="Medium" FontSize="28" HorizontalAlignment="Center" FontFamily="IBM Plex Mono Medium"/>
+                    <TextBlock Style="{StaticResource textblock}" Text="Ссылка на фотографию"/>
+                    <TextBox Style="{StaticResource RoundedTextBox1}" x:Name="photo"/>
+                    <Button Style="{StaticResource RoundedButton}" Content="Сохранить" Width="180" Margin="0 50 0 0" Click="Add_Photo_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+        <Popup Name="edit_popup" StaysOpen="False" Placement="Center" IsOpen="False">
+            <Border Background="#FFFF" CornerRadius="5" Padding="15" BorderBrush="#787272" BorderThickness="2">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Редактирование фотографии № " FontWeight="Medium" FontSize="28" FontFamily="IBM Plex Mono Medium"/>
+                        <TextBlock x:Name="id1" FontWeight="Medium" FontSize="28" FontFamily="IBM Plex Mono Medium"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource textblock}" Text="Ссылка на фотографию"/>
+                    <TextBox Style="{StaticResource RoundedTextBox1}" x:Name="photo1"/>
+                    <Button Style="{StaticResource RoundedButton}" Content="Сохранить" Width="180" Margin="0 50 0 0" Click="Edit_Photo_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</Page>

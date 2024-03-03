@@ -1,0 +1,33 @@
+﻿<Window x:Class="MYP.Employee.Employee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        WindowStartupLocation="CenterScreen"
+        xmlns:local="clr-namespace:MYP.Employee"
+        mc:Ignorable="d"
+        Title="Окно специалиста" Icon="../resources/person.png" Height="700" MinHeight="700" Width="1200" MinWidth="1200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.4*"/>
+            <RowDefinition Height="8.6*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Uid="0" Content="Осмотр квартиры" x:Name="inspection" Style="{StaticResource button_menu}" Margin="40 0 18 0" Click="Button_Click" FontFamily="IBM Plex Mono Light"/>
+                <TextBlock Text="⃝" Style="{StaticResource point}"/>
+                <Button Uid="1" Content="Покупка квартиры" x:Name="purchase" Style="{StaticResource button_menu}" Margin="18 0" Click="Button_Click" FontFamily="IBM Plex Mono Light"/>
+                <TextBlock Text="⃝" Style="{StaticResource point}"/>
+                <Button Uid="2" Content="Приватизация" x:Name="privat" Style="{StaticResource button_menu}" Margin="18 0" Click="Button_Click" FontFamily="IBM Plex Mono Light"/>
+                <!--<TextBlock Text="⃝" Style="{StaticResource point}"/>
+                <Button Uid="3" Content="Документы" x:Name="documents" Style="{StaticResource button_menu}" Margin="18 0" Click="Button_Click" FontFamily="IBM Plex Mono Light"/>-->
+                <TextBlock Text="⃝" Style="{StaticResource point}"/>
+                <Button Uid="4" Content="Выйти" x:Name="logout" Style="{StaticResource button_menu}" Margin="18 0" Click="Button_Click" FontFamily="IBM Plex Mono Light"/>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="0.4" VerticalAlignment="Bottom"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+        </Grid>
+    </Grid>
+</Window>
